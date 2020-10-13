@@ -365,6 +365,19 @@ func (s *Sling) ByteResponse() *Sling {
 	return s
 }
 
+// ReceiveBody creates a new HTTP request and returns the response.
+// Any error creating the request or sending it is returned.
+//
+// The response body will be left for you to parse.
+// Make sure to close it to prevent resource leaks.
+func (s *Sling) ReceiveBody() (*http.Response, error) {
+	req, err := s.Request()
+	if err != nil {
+		return nil, err
+	}
+	return s.httpClient.Do(req)
+}
+
 // ReceiveSuccess creates a new HTTP request and returns the response. Success
 // responses (2XX) are JSON decoded into the value pointed to by successV.
 // Any error creating the request, sending it, or decoding a 2XX response
