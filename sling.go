@@ -113,6 +113,12 @@ func (s *Sling) Doer(doer Doer) *Sling {
 
 // Method
 
+// Method sets the Sling request method.
+func (s *Sling) Method(method string) *Sling {
+	s.method = method
+	return s
+}
+
 // Head sets the Sling method to HEAD and sets the given pathURL.
 func (s *Sling) Head(pathURL string) *Sling {
 	s.method = "HEAD"
