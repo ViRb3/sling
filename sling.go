@@ -417,7 +417,7 @@ func (s *Sling) ReceiveBody() (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	return s.httpClient.Do(req)
+	return s.DoRaw(req)
 }
 
 // ReceiveSuccess creates a new HTTP request and returns the response. Success
@@ -441,6 +441,15 @@ func (s *Sling) Receive(successV, failureV interface{}) (*http.Response, error) 
 		return nil, err
 	}
 	return s.Do(req, successV, failureV)
+}
+
+// DoRaw sends an HTTP request and returns the raw response.
+// Any error creating the request or sending it is returned.
+//
+// The response body will be left for you to parse.
+// Make sure to close it to prevent resource leaks.
+func (s *Sling) DoRaw(req *http.Request) (*http.Response, error) {
+	return s.httpClient.Do(req)
 }
 
 // Do sends an HTTP request and returns the response. Success responses (2XX)
